@@ -1,4 +1,4 @@
-// server.js
+//server.js
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
@@ -15,13 +15,22 @@ app.use(express.static('uploads'));
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
+        console.log('Setting upload destination'); // Log destination setting
         cb(null, 'uploads/');
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + '_' + file.originalname);
+        const filename = Date.now() + '_' + file.originalname;
+        console.log(`Saving file as: ${filename}`); // Log file naming
+        cb(null, filename);
     }
 });
-const upload = multer({ storage: storage });
+const upload = multer({ 
+    storage: storage,
+    fileFilter: function (req, file, cb) {
+        console.log('Filtering file:', file); // Log file filter
+        cb(null, true);
+    }
+});
 
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];

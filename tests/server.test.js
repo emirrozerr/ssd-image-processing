@@ -1,5 +1,5 @@
-// tests/server.test.js
 const request = require('supertest');
+const fs = require('fs');
 const path = require('path');
 const app = require('../server');
 const { pool, registerUser } = require('../server/dbFiles/dbOperation');
@@ -50,11 +50,22 @@ describe('API Endpoints', () => {
             });
         const token = loginRes.body.accessToken;
 
+        const imagePath = path.join(__dirname, 'test_image.png');
+        console.log(`Image path: ${imagePath}`); // Log the image path to ensure it's correct
+
+        // Check if file exists and is accessible
+        if (!fs.existsSync(imagePath)) {
+            throw new Error(`Test image not found at path: ${imagePath}`);
+        }
+
         const res = await request(app)
             .post('/uploadImage')
             .set('Authorization', `Bearer ${token}`)
             .field('name', 'Test Image')
-            .attach('imageFile', path.join(__dirname, 'test', 'test_image.png'));
+            .attach('imageFile', imagePath);
+
+        console.log('Upload image response:', res.body); // Log the full response for debugging
+
         expect(res.statusCode).toEqual(201);
         expect(res.body).toHaveProperty('message', 'Image uploaded successfully');
         expect(res.body.image).toHaveProperty('id');
@@ -70,19 +81,50 @@ describe('API Endpoints', () => {
             });
         const token = loginRes.body.accessToken;
 
+        const originalImagePath = path.join(__dirname, 'test_image.png');
+        const modifiedImagePath = path.join(__dirname, 'modified_image.png');
+        console.log(`Original image path: ${originalImagePath}`); // Log the image path to ensure it's correct
+        console.log(`Modified image path: ${modifiedImagePath}`); // Log the image path to ensure it's correct
+
+        // Check if files exist and are accessible
+        if (!fs.existsSync(originalImagePath)) {
+            throw new Error(`Original test image not found at path: ${originalImagePath}`);
+        }
+        if (!fs.existsSync(modifiedImagePath)) {
+            throw new Error(`Modified test image not found at path: ${modifiedImagePath}`);
+        }
+
         const uploadRes = await request(app)
             .post('/uploadImage')
             .set('Authorization', `Bearer ${token}`)
             .field('name', 'Test Image')
-            .attach('imageFile', path.join(__dirname, 'test', 'test_image.png'));
-        const originalImageID = uploadRes.body.image.id;
+            .attach('imageFile', originalImagePath);
+
+        console.log('Upload image response:', uploadRes.body); // Log the full response for debugging
+
+        if (!uploadRes.body.image) {
+            console.error('Upload image error details:', uploadRes.body); // Log error details
+        }
+
+        const originalImageID = uploadRes.body.image ? uploadRes.body.image.id : null;
+
+        if (!originalImageID) {
+            throw new Error('Failed to upload original image and retrieve its ID.');
+        }
 
         const res = await request(app)
             .post('/saveModifiedImage')
             .set('Authorization', `Bearer ${token}`)
             .field('originalImageID', originalImageID)
             .field('name', 'Modified Image')
-            .attach('imageFile', path.join(__dirname, 'test', 'modified_image.png'));
+            .attach('imageFile', modifiedImagePath);
+
+        console.log('Save modified image response:', res.body); // Log the full response for debugging
+
+        if (res.statusCode !== 201) {
+            console.error('Save modified image error details:', res.body); // Log error details
+        }
+
         expect(res.statusCode).toEqual(201);
         expect(res.body).toHaveProperty('message', 'Modified image saved successfully');
         expect(res.body.modifiedImage).toHaveProperty('id');
