@@ -30,6 +30,8 @@
         </activity>
         <activity android:name=".ImagePage">
         </activity>
+        <activity android:name=".Tabs">
+        </activity>
     </application>
 
 </manifest>

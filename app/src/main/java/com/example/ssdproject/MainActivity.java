@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void login(View v) {
-        Intent i = new Intent(this, ImagePage.class);
+        Intent i = new Intent(this, Tabs.class);
         startActivity(i);
     }
 }
