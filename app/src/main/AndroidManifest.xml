@@ -16,7 +16,7 @@
         android:theme="@style/Theme.SSDProject"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.activities.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:resizeableActivity="true"
@@ -28,9 +28,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ImagePage">
+        <activity android:name=".ui.activities.ImageUploadActivity">
         </activity>
-        <activity android:name=".Tabs">
+        <activity android:name=".ui.activities.TabsActivity">
         </activity>
     </application>
 

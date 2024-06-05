@@ -1,4 +1,4 @@
-package com.example.ssdproject;
+package com.example.ssdproject.ui.activities;
 
 import android.os.Bundle;
 
@@ -6,15 +6,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.ssdproject.R;
+import com.example.ssdproject.ui.adapters.VPAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-public class Tabs extends AppCompatActivity {
+public class TabsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.tabs);
+        setContentView(R.layout.activity_tabs);
 
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         ViewPager2 viewPager = findViewById(R.id.view_pager);

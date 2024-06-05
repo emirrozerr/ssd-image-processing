@@ -1,6 +1,5 @@
-package com.example.ssdproject;
+package com.example.ssdproject.ui.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -8,22 +7,19 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-public class ImagePage extends AppCompatActivity {
+import com.example.ssdproject.R;
+
+public class ImageUploadActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 1;
 
@@ -32,7 +28,7 @@ public class ImagePage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.page_image);
+        setContentView(R.layout.activity_image_upload);
 
         imageView = findViewById(R.id.selectedImage);
 
@@ -40,7 +36,7 @@ public class ImagePage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(ImagePage.this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE_PERMISSION);
+                    ActivityCompat.requestPermissions(ImageUploadActivity.this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE_PERMISSION);
                 } else {
                     Log.d("ImagePage", "Storage permission is already granted");
                     selectImage();
@@ -56,7 +52,7 @@ public class ImagePage extends AppCompatActivity {
                     Uri uri = result.getData().getData();
                     imageView.setImageURI(uri);
                 } else {
-                    Toast.makeText(ImagePage.this, "Error in opening image", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ImageUploadActivity.this, "Error in opening image", Toast.LENGTH_SHORT).show();
                 }
             }
     );
@@ -75,7 +71,7 @@ public class ImagePage extends AppCompatActivity {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 selectImage();
             } else {
-                Toast.makeText(ImagePage.this, "Storage Permission Denied", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ImageUploadActivity.this, "Storage Permission Denied", Toast.LENGTH_SHORT).show();
             }
         }
     }

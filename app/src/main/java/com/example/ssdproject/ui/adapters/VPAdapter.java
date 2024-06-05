@@ -1,4 +1,4 @@
-package com.example.ssdproject;
+package com.example.ssdproject.ui.adapters;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -6,6 +6,10 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import com.example.ssdproject.ui.fragments.HelpTabFragment;
+import com.example.ssdproject.ui.fragments.HistoryTabFragment;
+import com.example.ssdproject.ui.fragments.TransformTabFragment;
 
 import org.jetbrains.annotations.NotNull;
 

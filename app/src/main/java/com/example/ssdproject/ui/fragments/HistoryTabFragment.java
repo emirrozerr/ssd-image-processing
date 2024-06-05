@@ -1,4 +1,4 @@
-package com.example.ssdproject;
+package com.example.ssdproject.ui.fragments;
 
 import android.os.Bundle;
 
@@ -8,10 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.ssdproject.R;
 
-public class HelpTabFragment extends Fragment {
 
-    public HelpTabFragment(){
+public class HistoryTabFragment extends Fragment {
+
+    public HistoryTabFragment() {
 
     }
 
@@ -19,6 +21,6 @@ public class HelpTabFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_help_tab, container, false);
+        return inflater.inflate(R.layout.fragment_history_tab, container, false);
     }
 }
