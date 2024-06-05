@@ -45,19 +45,19 @@
             android:layout_height="wrap_content">
 
             <RadioButton
-                android:id="@+id/radioButton4"
+                android:id="@+id/scale_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="RadioButton" />
 
             <RadioButton
-                android:id="@+id/radioButton5"
+                android:id="@+id/recoloring_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="RadioButton" />
 
             <RadioButton
-                android:id="@+id/radioButton6"
+                android:id="@+id/image_adjustment_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="RadioButton" />
