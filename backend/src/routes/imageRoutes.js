@@ -1,8 +1,10 @@
+//imageRoutes.js
 const express = require('express');
-const { loadImage, saveModifiedImage } = require('../controllers/imageController');
 const router = express.Router();
+const imageController = require('../controllers/imageController');
+const authenticateToken = require('../middleware/authMiddleware');
 
-router.post('/load', loadImage);
-router.post('/save-modified', saveModifiedImage);
+router.post('/upload', authenticateToken, imageController.loadImage);
+router.post('/saveModifiedImage', authenticateToken, imageController.saveModifiedImage);
 
 module.exports = router;

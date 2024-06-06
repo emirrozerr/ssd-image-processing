@@ -1,14 +1,18 @@
-const pool = require('../db');
+//processHistoryController.js
+const processHistoryModel = require('../models/processHistoryModel');
 
-const getProcessHistory = async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM "ProcessHistory"');
-    res.json(result.rows);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
+async function logProcessHistory(req, res) {
+    try {
+        const { originalImageID, modifiedImageID } = req.body;
+        const userID = req.user.id;
+
+        const history = await processHistoryModel.logProcessHistory(userID, originalImageID, modifiedImageID);
+        res.status(201).json({ message: 'Process history logged successfully', history });
+    } catch (error) {
+        res.status(500).json({ error: 'An error occurred while logging process history', details: error.message });
+    }
+}
 
 module.exports = {
-  getProcessHistory,
+    logProcessHistory
 };

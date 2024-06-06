@@ -1,7 +1,9 @@
+//processHistoryRoutes.js
 const express = require('express');
-const { getProcessHistory } = require('../controllers/processHistoryController');
 const router = express.Router();
+const processHistoryController = require('../controllers/processHistoryController');
+const authenticateToken = require('../middleware/authMiddleware');
 
-router.get('/', getProcessHistory);
+router.post('/logProcessHistory', authenticateToken, processHistoryController.logProcessHistory);
 
 module.exports = router;

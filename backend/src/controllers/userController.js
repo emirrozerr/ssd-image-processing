@@ -1,36 +1,34 @@
-const pool = require('../db');
+//userController.js
+const userModel = require('../models/userModel');
+const jwt = require('jsonwebtoken');
+const config = require('../dbConfig');
 
-const registerUser = async (req, res) => {
-  const { name, email } = req.body;
-  try {
-    const result = await pool.query(
-      'INSERT INTO "User" ("Name", "Email") VALUES ($1, $2) RETURNING *',
-      [name, email]
-    );
-    res.json(result.rows[0]);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
-
-const loginUser = async (req, res) => {
-  const { email } = req.body;
-  try {
-    const result = await pool.query(
-      'SELECT * FROM "User" WHERE "Email" = $1',
-      [email]
-    );
-    if (result.rows.length > 0) {
-      res.json(result.rows[0]);
-    } else {
-      res.status(404).json({ error: 'User not found' });
+async function registerUser(req, res) {
+    try {
+        const { email, name } = req.body;
+        const user = await userModel.registerUser(email, name);
+        res.status(201).json({ message: 'Registration successful', user });
+    } catch (error) {
+        res.status(500).json({ error: 'An error occurred while registering user' });
     }
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
+}
+
+async function loginUser(req, res) {
+    try {
+        const { email } = req.body;
+        const user = await userModel.loginUser(email);
+        if (user) {
+            const accessToken = jwt.sign({ id: user.id, email: user.email }, config.jwtSecret, { expiresIn: '1h' });
+            res.status(200).json({ message: 'Login successful', accessToken, user });
+        } else {
+            res.status(401).json({ error: 'Invalid email' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'An error occurred while logging in user' });
+    }
+}
 
 module.exports = {
-  registerUser,
-  loginUser,
+    registerUser,
+    loginUser
 };
