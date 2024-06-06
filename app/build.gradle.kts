@@ -33,6 +33,11 @@ android {
 
 dependencies {
 
+    //------- TO CONNECT TO NODEJS API ------------
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    //---------------------------------------------
+
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.recyclerview)

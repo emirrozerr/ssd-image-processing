@@ -1,4 +1,4 @@
-package com.example.ssdproject.ui.Transformers;
+package com.example.ssdproject.ui.transformers;
 
 import android.content.res.Resources;
 import android.view.View;

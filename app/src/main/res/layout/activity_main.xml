@@ -32,7 +32,7 @@
         tools:srcCompat="@drawable/avatar_1" />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/mailAdress"
         android:layout_width="292dp"
         android:layout_height="55dp"
         android:layout_marginBottom="306dp"

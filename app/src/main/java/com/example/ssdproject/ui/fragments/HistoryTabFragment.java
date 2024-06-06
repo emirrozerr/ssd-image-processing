@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ssdproject.R;
-import com.example.ssdproject.ui.Transformers.VerticalTransformer;
+import com.example.ssdproject.ui.transformers.VerticalTransformer;
 import com.example.ssdproject.ui.adapters.HistoryAdapter;
 
 import java.util.ArrayList;
