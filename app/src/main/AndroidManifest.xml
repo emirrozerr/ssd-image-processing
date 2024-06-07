@@ -32,6 +32,8 @@
         </activity>
         <activity android:name=".ui.activities.TabsActivity">
         </activity>
+        <activity android:name=".ui.activities.ResultActivity">
+        </activity>
     </application>
 
 </manifest>

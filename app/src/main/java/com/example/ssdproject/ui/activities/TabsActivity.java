@@ -34,5 +34,7 @@ public class TabsActivity extends AppCompatActivity {
                     }
                 }
         ).attach();
+
+        viewPager.setCurrentItem(1);
     }
 }

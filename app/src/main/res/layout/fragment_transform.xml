@@ -32,7 +32,7 @@
         app:srcCompat="@android:drawable/ic_menu_camera" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/proceed_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="112dp"
@@ -46,7 +46,7 @@
         android:layout_height="149dp"
         android:layout_marginBottom="36dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/proceed_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 

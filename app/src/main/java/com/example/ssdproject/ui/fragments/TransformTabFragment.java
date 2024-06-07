@@ -19,17 +19,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.ssdproject.R;
+import com.example.ssdproject.ui.activities.ResultActivity;
 
 public class TransformTabFragment extends Fragment {
 
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 1;
     ImageView imageView;
     ImageButton myButton;
+    Button proceedButton;
 
     public TransformTabFragment() {
 
@@ -41,6 +44,9 @@ public class TransformTabFragment extends Fragment {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     Uri uri = result.getData().getData();
                     imageView.setImageURI(uri);
+                    //we use setTag() here in order to easily get the URI later
+                    imageView.setTag(uri.toString());
+                    proceedButton.setEnabled(true);
                     Log.d("Transform", "Successful in opening image");
                 } else {
                     Toast.makeText(getContext(), "Error in opening image", Toast.LENGTH_SHORT).show();
@@ -53,8 +59,10 @@ public class TransformTabFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         View view = inflater.inflate(R.layout.fragment_transform, container, false);
+
+        proceedButton = view.findViewById(R.id.proceed_button);
+        proceedButton.setEnabled(false);
 
         imageView = view.findViewById((R.id.selectedImage));
         myButton = (ImageButton) view.findViewById(R.id.buttonSelectImage);
@@ -66,6 +74,21 @@ public class TransformTabFragment extends Fragment {
                 } else {
                     Log.d("Transform", "Storage permission is already granted");
                     selectImage();
+                }
+            }
+        });
+
+        proceedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (imageView.getDrawable() == null) {
+                    //Shouldn't be able to get here
+                    //Report if it does
+                    Toast.makeText(getActivity().getApplicationContext(), "Load an image first!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent i = new Intent(getActivity().getApplicationContext(), ResultActivity.class);
+                    i.putExtra("originalImagePath", imageView.getTag().toString());
+                    startActivity(i);
                 }
             }
         });
@@ -91,5 +114,4 @@ public class TransformTabFragment extends Fragment {
             }
         }
     }
-
 }

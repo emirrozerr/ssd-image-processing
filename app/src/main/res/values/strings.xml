@@ -26,6 +26,9 @@
     <string name="operations_text">Operations</string>
     <string name="history_text">History</string>
 
+    <string name="save_text">Save this image</string>
+    <string name="discard_text">Discard this image</string>
+
     <string name="lorem_ipsum_title">Lorem Ipsum"</string>
     <string name="lorem_ipsum">Lorem Ipsum is simply placeholder text of the printing and
         typesetting industry. Lorem Ipsum has been the industry\'s standard placeholder text ever
