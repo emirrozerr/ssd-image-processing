@@ -44,7 +44,13 @@ public class MainActivity extends AppCompatActivity {
                 public void onResponse(Call<User> call, Response<User> response) {
                     if (response.isSuccessful()) {
                         //If returns code 200
+                        //--------------------- RIGHT NOW THIS DOESN'T WORK ------------------------
                         currentUser = response.body();
+                        //We send TabsActivity who we are
+                        //Probably not the best way to do this but i have no idea how to do it otherwise
+                        //:)))
+                        i.putExtra(USER_SERVICE, currentUser);
+                        //--------------------------------------------------------------------------
                         startActivity(i);
                     }
                     else {
@@ -88,16 +94,5 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Please introduce an email first", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        //Save current user on instanceState
-        //This way we can know who we are later on
-        //To recover current user just do:
-        //savedInsanceState.getParcelable(STATE_USER)
-        //Tecnically it should be fine to just include the user id, but this way looks cooler :)
-        outState.putParcelable(STATE_USER, currentUser);
     }
 }
