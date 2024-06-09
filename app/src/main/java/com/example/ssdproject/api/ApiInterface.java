@@ -1,7 +1,13 @@
-package com.example.ssdproject.ui;
+package com.example.ssdproject.api;
+
+import com.example.ssdproject.model.Image;
+import com.example.ssdproject.model.ProcessHistory;
+import com.example.ssdproject.model.User;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -12,11 +18,12 @@ public interface ApiInterface {
         @GET("/api/users/{uid}")
         Call<User> getUser(@Path("uid") String uid);
 
-        @POST("/register")
-        Call<User> registerUser(@Body String email, @Body String name, @Body String password);
+        @POST("/api/users/register")
+        Call<User> registerUser(@Body RegisterRequest registerRequest);
 
-        @POST("/login")
-        Call<User> loginUser(@Body String email, @Body String password);
+        @FormUrlEncoded
+        @POST("/api/users/login")
+        Call<User> loginUser(@Field("email") String email);
     }
 
     interface RequestImage {

@@ -1,11 +1,12 @@
-package com.example.ssdproject.ui;
+package com.example.ssdproject.model;
 
 import androidx.annotation.NonNull;
 
-public class User {
+public class Image {
     private String id;
     private String name;
-    private String email;
+    private String path;
+    private String user_id;
 
     public String getId() {
         return id;
@@ -23,12 +24,20 @@ public class User {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getPath() {
+        return path;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getUserId() {
+        return user_id;
+    }
+
+    public void setUserId(String user_id) {
+        this.user_id = user_id;
     }
 
     @NonNull

@@ -1,4 +1,4 @@
-package com.example.ssdproject.ui;
+package com.example.ssdproject.model;
 
 import java.util.Date;
 
