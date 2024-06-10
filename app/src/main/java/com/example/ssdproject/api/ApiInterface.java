@@ -23,7 +23,7 @@ public interface ApiInterface {
 
         @FormUrlEncoded
         @POST("/api/users/login")
-        Call<User> loginUser(@Field("email") String email);
+        Call<LoginResponse> loginUser(@Field("email") String email);
     }
 
     interface RequestImage {

@@ -5,10 +5,16 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
-public class User implements Parcelable {
+public class User {
     private String id;
     private String name;
     private String email;
+
+    public User(String id, String name, String email) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    }
 
     public String getId() {
         return id;
@@ -37,33 +43,5 @@ public class User implements Parcelable {
     @NonNull
     public String toString() {
         return this.name;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(@NonNull Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(name);
-        dest.writeString(email);
-    }
-
-    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
-        public User createFromParcel(Parcel in) {
-            return new User(in);
-        }
-
-        public User[] newArray(int size) {
-            return new User[size];
-        }
-    };
-
-    private User(Parcel in) {
-        id = in.readString();
-        name = in.readString();
-        email = in.readString();
     }
 }
