@@ -10,6 +10,8 @@ const imageRoutes = require('./routes/imageRoutes');
 const userRoutes = require('./routes/userRoutes');
 const processHistoryRoutes = require('./routes/processHistoryRoutes');
 
+const modifyImageRoutes = require('./routes/modifyImageRoutes');
+
 const app = express();
 const PORT = 3000;
 
@@ -23,6 +25,8 @@ app.use(express.static('uploads'));
 app.use('/api/images', imageRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/processHistory', processHistoryRoutes);
+
+app.use('/api/modifyImage', modifyImageRoutes);
 
 // Multer setup
 const storage = multer.diskStorage({

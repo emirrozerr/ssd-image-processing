@@ -6,6 +6,12 @@ import matplotlib.pyplot as plt
 import keras
 from huggingface_hub import from_pretrained_keras
 
+import sys
+
+if __name__ == "__main__":
+    modifiedImage = infer(argv[1])
+    print(modifiedImage)
+    sys.stdout.flush()
 
 # Function to plot and compare images
 def plot_results(images, titles, figure_size=(12, 12)):
