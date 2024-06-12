@@ -1,47 +1,37 @@
 package com.example.ssdproject.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import androidx.annotation.NonNull;
-
 public class User {
-    private String id;
-    private String name;
-    private String email;
+    private String Id;
+    private String Name;
+    private String Email;
 
     public User(String id, String name, String email) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-    }
-
-    public String getId() {
-        return id;
+        this.Id = id;
+        this.Name = name;
+        this.Email = email;
     }
 
     public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
+        Id = id;
     }
 
     public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
+        Name = name;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        Email = email;
     }
 
-    @NonNull
-    public String toString() {
-        return this.name;
+    public String getId() {
+        return Id;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public String getEmail() {
+        return Email;
     }
 }

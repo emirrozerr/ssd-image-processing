@@ -1,8 +1,10 @@
-package com.example.ssdproject.api;
+package com.example.ssdproject.network.api;
 
 import com.example.ssdproject.model.Image;
 import com.example.ssdproject.model.ProcessHistory;
 import com.example.ssdproject.model.User;
+import com.example.ssdproject.network.dto.LoginResponseDTO;
+import com.example.ssdproject.network.dto.RegisterRequestDTO;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -12,18 +14,18 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
-public interface ApiInterface {
+public interface ApiService {
 
     interface RequestUser {
         @GET("/api/users/{uid}")
         Call<User> getUser(@Path("uid") String uid);
 
         @POST("/api/users/register")
-        Call<User> registerUser(@Body RegisterRequest registerRequest);
+        Call<User> registerUser(@Body RegisterRequestDTO registerRequestDTO);
 
         @FormUrlEncoded
         @POST("/api/users/login")
-        Call<LoginResponse> loginUser(@Field("email") String email);
+        Call<LoginResponseDTO> loginUser(@Field("email") String email);
     }
 
     interface RequestImage {

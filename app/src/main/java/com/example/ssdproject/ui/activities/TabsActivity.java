@@ -1,6 +1,5 @@
 package com.example.ssdproject.ui.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -9,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.ssdproject.R;
-import com.example.ssdproject.api.ApiClient;
-import com.example.ssdproject.api.SessionManager;
+import com.example.ssdproject.network.api.ApiClient;
+import com.example.ssdproject.network.api.SessionManager;
 import com.example.ssdproject.ui.adapters.VPAdapter;
 import com.example.ssdproject.model.User;
 
@@ -33,7 +32,7 @@ public class TabsActivity extends AppCompatActivity {
         sessionManager = new SessionManager(this);
 
         User currentUser = sessionManager.fetchUser();
-        Toast.makeText(this, "Logged in as: " + currentUser.getName(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Logged in as: " + currentUser.getEmail(), Toast.LENGTH_SHORT).show();
 
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         ViewPager2 viewPager = findViewById(R.id.view_pager);

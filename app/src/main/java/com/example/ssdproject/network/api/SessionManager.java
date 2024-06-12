@@ -1,4 +1,4 @@
-package com.example.ssdproject.api;
+package com.example.ssdproject.network.api;
 
 import android.content.Context;
 import android.content.SharedPreferences;

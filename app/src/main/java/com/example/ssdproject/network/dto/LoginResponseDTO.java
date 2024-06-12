@@ -1,9 +1,9 @@
-package com.example.ssdproject.api;
+package com.example.ssdproject.network.dto;
 
 import com.example.ssdproject.model.User;
 import com.google.gson.annotations.SerializedName;
 
-public class LoginResponse {
+public class LoginResponseDTO {
     @SerializedName("message")
     String statusCode;
 

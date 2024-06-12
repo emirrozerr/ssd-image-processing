@@ -6,16 +6,16 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ssdproject.R;
-import com.example.ssdproject.api.ApiClient;
-import com.example.ssdproject.api.ApiInterface;
-import com.example.ssdproject.api.LoginResponse;
-import com.example.ssdproject.api.RegisterRequest;
-import com.example.ssdproject.api.SessionManager;
-import com.example.ssdproject.model.User;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.ssdproject.R;
+import com.example.ssdproject.model.User;
+import com.example.ssdproject.network.api.ApiClient;
+import com.example.ssdproject.network.api.ApiService;
+import com.example.ssdproject.network.api.SessionManager;
+import com.example.ssdproject.network.dto.LoginResponseDTO;
+import com.example.ssdproject.network.dto.RegisterRequestDTO;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,22 +39,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void login(View v) {
-        Intent i = new Intent(this, TabsActivity.class);
-        TextView tv = findViewById(R.id.mailAdress);
-        String mail = tv.getText().toString();
+        Intent intent = new Intent(this, TabsActivity.class);
+        TextView textView = findViewById(R.id.mailAdress);
+        String mail = textView.getText().toString();
+
         if (!mail.isEmpty()) {
-            ApiInterface.RequestUser requestUser = apiClient.create(ApiInterface.RequestUser.class);
-            requestUser.loginUser(mail).enqueue(new Callback<LoginResponse>() {
+            ApiService.RequestUser requestUser = apiClient.create(ApiService.RequestUser.class);
+            requestUser.loginUser(mail).enqueue(new Callback<LoginResponseDTO>() {
                 @Override
-                public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                public void onResponse(@NonNull Call<LoginResponseDTO> call, @NonNull Response<LoginResponseDTO> response) {
                     if (response.isSuccessful()) {
                         //If returns code 200
 
-                        LoginResponse loginResponse = response.body();
-                        sessionManager.saveAuthToken(loginResponse.getAccessToken());
-                        sessionManager.saveUser(loginResponse.getUser());
+                        LoginResponseDTO loginResponseDTO = response.body();
+                        sessionManager.saveAuthToken(loginResponseDTO.getAccessToken());
+                        sessionManager.saveUser(loginResponseDTO.getUser());
 
-                        startActivity(i);
+
+                        startActivity(intent);
                     }
                     else {
                         Toast.makeText(MainActivity.this, "Invalid login", Toast.LENGTH_SHORT).show();
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<LoginResponse> call, Throwable throwable) {
+                public void onFailure(@NonNull Call<LoginResponseDTO> call, @NonNull Throwable throwable) {
                     Toast.makeText(MainActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
                     //Toast.makeText(MainActivity.this, "Error while login in", Toast.LENGTH_SHORT).show();
                 }
@@ -75,11 +77,16 @@ public class MainActivity extends AppCompatActivity {
     public void register(View v) {
         TextView tv = findViewById(R.id.mailAdress);
         String mail = tv.getText().toString();
+
+        RegisterRequestDTO registerRequestDTO = new RegisterRequestDTO();
+        registerRequestDTO.setEmail(mail);
+        registerRequestDTO.setName("");
+        //TODO set name
         if (!mail.isEmpty()) {
-            ApiInterface.RequestUser requestUser = apiClient.create(ApiInterface.RequestUser.class);
-            requestUser.registerUser(new RegisterRequest(mail, mail)).enqueue(new Callback<User>() {
+            ApiService.RequestUser requestUser = apiClient.create(ApiService.RequestUser.class);
+            requestUser.registerUser(registerRequestDTO).enqueue(new Callback<User>() {
                 @Override
-                public void onResponse(Call<User> call, Response<User> response) {
+                public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                     if (response.isSuccessful()) {
                         //Register successful
                         Toast.makeText(MainActivity.this, "Register successful!", Toast.LENGTH_SHORT).show();
@@ -89,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<User> call, Throwable throwable) {
+                public void onFailure(@NonNull Call<User> call, @NonNull Throwable throwable) {
                     Toast.makeText(MainActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
                     //Toast.makeText(MainActivity.this, "Error while registering", Toast.LENGTH_SHORT).show();
                 }
