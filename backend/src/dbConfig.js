@@ -2,7 +2,7 @@
 const config = {
   user: 'postgres',
   host: 'localhost',
-  database: 'imageprocessing',
+  database: 'image_processing',
   password: '12345',
   port: 5432,
   jwtSecret: 'ImageProcessingToken'

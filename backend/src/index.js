@@ -11,7 +11,7 @@ const userRoutes = require('./routes/userRoutes');
 const processHistoryRoutes = require('./routes/processHistoryRoutes');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = 3000;
 
 // Middleware
 app.use(cors());
