@@ -35,4 +35,10 @@ public interface ApiInterface {
         @GET("/api/processHistory/{hid}")
         Call<ProcessHistory> getProcessHistory(@Path("hid") String hid);
     }
+
+    interface RequestImageModifier {
+        @FormUrlEncoded
+        @POST("/api/modifyImage/modify")
+        Call<ModifyImageResponse> modifyImage(@Field("file") byte[] file);
+    }
 }
