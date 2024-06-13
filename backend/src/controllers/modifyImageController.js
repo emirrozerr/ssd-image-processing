@@ -3,16 +3,23 @@
 async function modify(req, res) {
     try {
         const spawn = require("child_process").spawn;
-        const file = req.file;
+        const { file } = req.body;
+
+        console.log(`Received request`);
+        console.log(file);
 
         if (!file) {
             return res.status(400).json({ error: 'Image data is required'});
         }
 
-        const pythonProcess = spawn('python', ["../AI_Model/MirNet.py", file]);
+        console.log(`Starting python`);
+
+        const pythonProcess = spawn('python', [__dirname + "/AI_Model/MirNet.py", file]);
         pythonProcess.stdout.on('data', (image) => {
             res.status(201).json({ message: 'Image modified successfully', image});
         });
+
+        console.log(`Finished python`);
 
 
     } catch (error) {

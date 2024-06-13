@@ -25,7 +25,8 @@ def plot_results(images, titles, figure_size=(12, 12)):
 # Function to perform inference using the MIRNet model
 def infer(original_image):
     model = from_pretrained_keras("keras-io/lowlight-enhance-mirnet") # Load the model
-    image = keras.utils.img_to_array(original_image)  # Convert image to array
+    #image = keras.utils.img_to_array(original_image)  # Convert image to array
+    image = original_image
     image = image.astype("float32") / 255.0 # Normalize the image
     image = np.expand_dims(image, axis=0) # Expand dimensions to fit model input
     output = model.predict(image, verbose=0) # Get the model prediction
@@ -34,7 +35,7 @@ def infer(original_image):
     output_image = output_image.reshape(
         (np.shape(output_image)[0], np.shape(output_image)[1], 3)
     )
-    output_image = Image.fromarray(np.uint8(output_image)) # Convert array to image
+    #output_image = Image.fromarray(np.uint8(output_image)) # Convert array to image
     original_image = Image.fromarray(np.uint8(original_image)) # Convert original array to image
     return output_image
 
