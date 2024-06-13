@@ -1,8 +1,8 @@
-package com.example.ssdproject.api;
+package com.example.ssdproject.network.dto;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ModifyImageResponse {
+public class ModifyImageResponseDTO {
     @SerializedName("image")
     private byte[] image;
 }

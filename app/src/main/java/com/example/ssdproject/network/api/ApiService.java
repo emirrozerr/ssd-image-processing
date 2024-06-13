@@ -5,6 +5,7 @@ import com.example.ssdproject.model.ProcessHistory;
 import com.example.ssdproject.model.User;
 import com.example.ssdproject.network.dto.LoginResponseDTO;
 import com.example.ssdproject.network.dto.RegisterRequestDTO;
+import com.example.ssdproject.network.dto.ModifyImageResponseDTO;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -41,6 +42,6 @@ public interface ApiService {
     interface RequestImageModifier {
         @FormUrlEncoded
         @POST("/api/modifyImage/modify")
-        Call<ModifyImageResponse> modifyImage(@Field("file") byte[] file);
+        Call<ModifyImageResponseDTO> modifyImage(@Field("file") byte[] file);
     }
 }

@@ -9,10 +9,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ssdproject.R;
-import com.example.ssdproject.api.ApiClient;
-import com.example.ssdproject.api.ApiInterface;
-import com.example.ssdproject.api.ModifyImageResponse;
-import com.example.ssdproject.api.SessionManager;
+import com.example.ssdproject.network.dto.ModifyImageResponseDTO;
+import com.example.ssdproject.network.api.ApiClient;
+import com.example.ssdproject.network.api.ApiService;
+import com.example.ssdproject.network.api.SessionManager;
+
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -59,10 +60,10 @@ public class ResultActivity extends AppCompatActivity {
         //No idea how I'm gonna do it
         //----------------------------------
 
-        ApiInterface.RequestImageModifier requestImageModifier = apiClient.create(ApiInterface.RequestImageModifier.class);
-        requestImageModifier.modifyImage(imageData).enqueue(new Callback<ModifyImageResponse>() {
+        ApiService.RequestImageModifier requestImageModifier = apiClient.create(ApiService.RequestImageModifier.class);
+        requestImageModifier.modifyImage(imageData).enqueue(new Callback<ModifyImageResponseDTO>() {
             @Override
-            public void onResponse(Call<ModifyImageResponse> call, Response<ModifyImageResponse> response) {
+            public void onResponse(Call<ModifyImageResponseDTO> call, Response<ModifyImageResponseDTO> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(ResultActivity.this, "Modification successful!", Toast.LENGTH_SHORT).show();
                 } else {
@@ -71,7 +72,7 @@ public class ResultActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ModifyImageResponse> call, Throwable throwable) {
+            public void onFailure(Call<ModifyImageResponseDTO> call, Throwable throwable) {
                 Toast.makeText(ResultActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
