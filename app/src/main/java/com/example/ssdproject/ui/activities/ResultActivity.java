@@ -17,7 +17,8 @@ public class ResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Bundle extras = getIntent().getExtras();
-        Uri originalImageURI = Uri.parse(extras.getString("originalImagePath"));
+        Uri originalImageURI = Uri.parse(extras.getString("originalImageURI"));
+        String originalImageDbId = extras.getString("originalImageDbId");
 
         //Call the AI engine here
         //No idea how I'm gonna do it

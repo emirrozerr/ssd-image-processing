@@ -25,7 +25,21 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.ssdproject.R;
+import com.example.ssdproject.helpers.Helpers;
+import com.example.ssdproject.network.api.ApiClient;
+import com.example.ssdproject.network.api.ApiService;
+import com.example.ssdproject.network.api.SessionManager;
+import com.example.ssdproject.network.dto.UploadResponseDTO;
 import com.example.ssdproject.ui.activities.ResultActivity;
+
+import java.io.File;
+
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class TransformTabFragment extends Fragment {
 
@@ -33,6 +47,9 @@ public class TransformTabFragment extends Fragment {
     ImageView imageView;
     ImageButton myButton;
     Button proceedButton;
+
+    Retrofit apiClient;
+    SessionManager sessionManager;
 
     public TransformTabFragment() {
 
@@ -61,6 +78,9 @@ public class TransformTabFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_transform, container, false);
 
+        apiClient = ApiClient.getApiClient();
+        sessionManager = new SessionManager(getActivity().getApplicationContext());
+
         proceedButton = view.findViewById(R.id.proceed_button);
         proceedButton.setEnabled(false);
 
@@ -87,7 +107,34 @@ public class TransformTabFragment extends Fragment {
                     Toast.makeText(getActivity().getApplicationContext(), "Load an image first!", Toast.LENGTH_SHORT).show();
                 } else {
                     Intent i = new Intent(getActivity().getApplicationContext(), ResultActivity.class);
-                    i.putExtra("originalImagePath", imageView.getTag().toString());
+                    String originalImageURI = imageView.getTag().toString();
+                    i.putExtra("originalImageURI", originalImageURI);
+
+                    //Load image into the database
+                    String realPath = Helpers.getPathFromUri(getActivity().getApplicationContext(), Uri.parse(originalImageURI));
+                    File file = new File(realPath);
+                    RequestBody requestFile = RequestBody.create(MultipartBody.FORM, file);
+                    MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
+                    RequestBody user_id = RequestBody.create(MultipartBody.FORM, sessionManager.fetchUser().getId());
+
+                    ApiService.RequestImage requestImage = apiClient.create(ApiService.RequestImage.class);
+                    requestImage.loadImage("Bearer " + sessionManager.fetchAuthToken(), body, user_id).enqueue(new Callback<UploadResponseDTO>() {
+                        @Override
+                        public void onResponse(Call<UploadResponseDTO> call, Response<UploadResponseDTO> response) {
+                            if (response.isSuccessful()) {
+                                i.putExtra("originalImageId", response.body().getImage().getId());
+                            } else {
+                                Toast.makeText(getActivity().getApplicationContext(), "Failed to upload image!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<UploadResponseDTO> call, Throwable throwable) {
+                            Toast.makeText(getActivity().getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    //----------------------------
+
                     startActivity(i);
                 }
             }
