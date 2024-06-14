@@ -5,5 +5,7 @@ const processHistoryController = require('../controllers/processHistoryControlle
 const authenticateToken = require('../middleware/authMiddleware');
 
 router.post('/logProcessHistory', authenticateToken, processHistoryController.logProcessHistory);
+router.get('/:id', authenticateToken, processHistoryController.getAllProcessHistory);
+
 
 module.exports = router;

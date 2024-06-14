@@ -12,7 +12,18 @@ async function logProcessHistory(req, res) {
         res.status(500).json({ error: 'An error occurred while logging process history', details: error.message });
     }
 }
+async function getAllProcessHistory(req, res) {
+    try {
+        const userId = req.params.id;
+
+        const history = await processHistoryModel.getAllProcessHistory(userId);
+        res.status(201).json({ message: 'Process history logged successfully', history });
+    } catch (error) {
+        res.status(500).json({ error: 'An error occurred while logging process history', details: error.message });
+    }
+}
 
 module.exports = {
-    logProcessHistory
+    logProcessHistory,
+    getAllProcessHistory
 };

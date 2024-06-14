@@ -24,24 +24,6 @@ app.use('/api/images', imageRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/processHistory', processHistoryRoutes);
 
-// Multer setup
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/');
-    },
-    filename: function (req, file, cb) {
-        const filename = Date.now() + '_' + file.originalname;
-        cb(null, filename);
-    }
-});
-const upload = multer({ 
-    storage: storage,
-    fileFilter: function (req, file, cb) {
-        cb(null, true);
-    }
-});
-app.use(upload.single('imageFile'));
-
 // Start server
 if (process.env.NODE_ENV !== 'test') {
     app.listen(PORT, () => {
