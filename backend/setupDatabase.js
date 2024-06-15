@@ -3,6 +3,8 @@ const { Client } = require('pg');
 const knex = require('knex');
 const knexConfig = require('./knexfile.js').development;
 const dbConfig = require('./createDbConfig');
+const fs = require('fs');
+const path = require('path');
 
 const databaseName = 'image_processing';
 
@@ -56,10 +58,21 @@ async function runSeeds() {
   }
 }
 
+function createUploadsFolder() {
+  const uploadsPath = path.join(__dirname, 'uploads');
+  if (!fs.existsSync(uploadsPath)) {
+    fs.mkdirSync(uploadsPath);
+    console.log('Uploads folder created successfully');
+  } else {
+    console.log('Uploads folder already exists');
+  }
+}
+
 async function setup() {
   await createDatabase();
   await runMigrations();
   await runSeeds();
+  await createUploadsFolder();
 }
 
 setup();
