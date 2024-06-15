@@ -4,12 +4,15 @@ const processHistoryModel = require('../models/processHistoryModel');
 async function logProcessHistory(req, res) {
     try {
         // Parse the request body values as integers
-        const originalImageID = parseInt(req.body.OriginalImage_id, 10);
-        const modifiedImageID = parseInt(req.body.ModifiedImage_id, 10);
-        const userID = parseInt(req.body.User_id, 10);
+        //const originalImageID = parseInt(req.body.OriginalImage_id, 10);
+        //const modifiedImageID = parseInt(req.body.ModifiedImage_id, 10);
+        //const userID = parseInt(req.body.User_id, 10);
+        const userID = req.body.User_id;
+        const originalImageID = req.body.OriginalImage_id;
+        const modifiedImageID = req.body.ModifiedImage_id;
 
-        if (isNaN(originalImageID) || isNaN(modifiedImageID) || isNaN(userID)) {
-            return res.status(400).json({ error: 'Invalid input data' });
+        if (!userID || !originalImageID || !modifiedImageID) {
+            res.status(400).json({ error: 'Missing required input data' })
         }
 
         const history = await processHistoryModel.logProcessHistory(userID, originalImageID, modifiedImageID);
