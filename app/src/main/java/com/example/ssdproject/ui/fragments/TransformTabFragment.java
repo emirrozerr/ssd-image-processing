@@ -108,22 +108,32 @@ public class TransformTabFragment extends Fragment {
                 } else {
                     Intent i = new Intent(getActivity().getApplicationContext(), ResultActivity.class);
                     String originalImageURI = imageView.getTag().toString();
-                    i.putExtra("originalImageURI", originalImageURI);
 
-                    //Load image into the database
+                    Bundle extras = new Bundle();
+                    extras.putString("originalImageURI", originalImageURI);
+
+                    //Get real image path using the image URI
                     String realPath = Helpers.getPathFromUri(getActivity().getApplicationContext(), Uri.parse(originalImageURI));
+                    //---------------------------------------
+                    //Assemble API upload request
                     File file = new File(realPath);
                     RequestBody requestFile = RequestBody.create(MultipartBody.FORM, file);
                     MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
                     RequestBody user_id = RequestBody.create(MultipartBody.FORM, sessionManager.fetchUser().getId());
+                    //---------------------------
 
+                    //Load image into the database
                     ApiService.RequestImage requestImage = apiClient.create(ApiService.RequestImage.class);
                     requestImage.loadImage("Bearer " + sessionManager.fetchAuthToken(), body, user_id).enqueue(new Callback<UploadResponseDTO>() {
                         @Override
                         public void onResponse(Call<UploadResponseDTO> call, Response<UploadResponseDTO> response) {
                             if (response.isSuccessful()) {
-                                i.putExtra("originalImageId", response.body().getImage().getId());
+                                extras.putString("imagedbId", response.body().getImage().getId());
+                                i.putExtras(extras);
+                                startActivity(i);
                             } else {
+                                //Request denied
+                                //Most likely 403 Unauthorized
                                 Toast.makeText(getActivity().getApplicationContext(), "Failed to upload image!", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -134,8 +144,6 @@ public class TransformTabFragment extends Fragment {
                         }
                     });
                     //----------------------------
-
-                    startActivity(i);
                 }
             }
         });

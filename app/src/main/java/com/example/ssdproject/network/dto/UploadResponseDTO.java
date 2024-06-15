@@ -11,10 +11,10 @@ public class UploadResponseDTO {
     Image image;
 
     public String getMessage() {
-        return message;
+        return this.message;
     }
 
     public Image getImage() {
-        return image;
+        return this.image;
     }
 }

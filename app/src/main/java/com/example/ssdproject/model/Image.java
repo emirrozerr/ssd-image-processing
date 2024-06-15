@@ -2,10 +2,16 @@ package com.example.ssdproject.model;
 
 import androidx.annotation.NonNull;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Image {
+    @SerializedName("Id")
     private String id;
+    @SerializedName("Name")
     private String name;
+    @SerializedName("Path")
     private String path;
+    @SerializedName("User_id")
     private String user_id;
 
     public String getId() {
