@@ -4,6 +4,7 @@ import com.example.ssdproject.model.Image;
 import com.example.ssdproject.model.ProcessHistory;
 import com.example.ssdproject.model.User;
 import com.example.ssdproject.network.dto.LoginResponseDTO;
+import com.example.ssdproject.network.dto.ModifyResponseDTO;
 import com.example.ssdproject.network.dto.RegisterRequestDTO;
 import com.example.ssdproject.network.dto.UploadResponseDTO;
 
@@ -36,13 +37,16 @@ public interface ApiService {
 
     interface RequestImage {
         @GET("/api/images/{iid}")
-        Call<Image> getImage(@Path("iid") String iid);
+        Call<Image> getOriginalImageById(@Path("iid") String iid);
 
         @Multipart
         @POST("/api/images/upload")
         Call<UploadResponseDTO> loadImage(@Header("Authorization") String token,
                                           @Part MultipartBody.Part image,
                                           @Part("userID") RequestBody user_id);
+
+        @POST("/api/images/modify-Image/{iid}")
+        Call<ModifyResponseDTO> modifyImage(@Path("iid") String iid);
     }
 
     interface RequestProcessHistory {

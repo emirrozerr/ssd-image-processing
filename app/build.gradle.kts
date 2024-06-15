@@ -38,6 +38,10 @@ dependencies {
     implementation(libs.converter.gson)
     //---------------------------------------------
 
+    //------- TO DISPLAY URL IMAGES ---------------
+    implementation(libs.picasso)
+    //---------------------------------------------
+
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.recyclerview)
