@@ -19,7 +19,7 @@ async function logProcessHistory(userId, originalImageID, modifiedImageID) {
 }
 
 async function getAllProcessHistory(userId){
-    const query = `SELECT * FROM "ProcessHistory" WHERE "User_Id" = $1`;
+    const query = `SELECT * FROM "ProcessHistory" WHERE "User_id" = $1`;
     const params = [userId];
     console.log('Executing query:', query, 'with params:', params);
 
