@@ -96,6 +96,7 @@ public class ResultActivity extends AppCompatActivity {
                     resultImageURL = response.body().getProcessedImageUrl();
                     Picasso.get().load(resultImageURL).fit().into(resultImage);
                     saveImageButton.setEnabled(true);
+                    discardImageButton.setEnabled(true);
 
                 } else {
                     Toast.makeText(ResultActivity.this, "Failed to modify image!", Toast.LENGTH_SHORT).show();
@@ -138,9 +139,12 @@ public class ResultActivity extends AppCompatActivity {
                     Toast.makeText(ResultActivity.this,
                             "Image stored in " + Environment.getExternalStorageDirectory() + "/Pictures/",
                             Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
         });
+
+        discardImageButton.setOnClickListener(v -> finish());
     }
 
     private boolean storeImage(Bitmap imageBitMap) {
