@@ -14,7 +14,7 @@ async function logProcessHistory(req, res) {
 }
 async function getAllProcessHistory(req, res) {
     try {
-        const userID = parseInt(req.params.id, 10);  
+        const userID = parseInt(req.params.id, 10);
 
         const history = await processHistoryModel.getAllProcessHistory(userID);
         res.status(200).json({ message: 'Process history retrieved successfully', history });

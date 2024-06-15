@@ -5,8 +5,29 @@ const config = require('../dbConfig');
 const pool = new Pool(config);
 
 async function logProcessHistory(userId, originalImageID, modifiedImageID) {
-    const query = `INSERT INTO "ProcessHistory" ("User_id", "OriginalImage_id", "ModifiedImage_id") VALUES ($1, $2, $3) RETURNING *`;
+    const query = `
+        INSERT INTO "ProcessHistory" ("User_id", "OriginalImage_id", "ModifiedImage_id", "CreationDate", "UpdateDate")
+        VALUES ($1, $2, $3, NOW(), NOW())
+        RETURNING *`;
     const params = [userId, originalImageID, modifiedImageID];
+    console.log('Executing query:', query, 'with params:', params);
+
+    try {
+        const result = await pool.query(query, params);
+        return result.rows[0];
+    } catch (error) {
+        console.error('Error executing query:', query, 'with params:', params, error);
+        throw error;
+    }
+}
+
+async function updateProcessHistory(id, userId, originalImageID, modifiedImageID) {
+    const query = `
+        UPDATE "ProcessHistory"
+        SET "User_id" = $1, "OriginalImage_id" = $2, "ModifiedImage_id" = $3, "UpdateDate" = NOW()
+        WHERE "Id" = $4
+        RETURNING *`;
+    const params = [userId, originalImageID, modifiedImageID, id];
     console.log('Executing query:', query, 'with params:', params);
 
     try {
@@ -34,5 +55,6 @@ async function getAllProcessHistory(userId){
 
 module.exports = {
     logProcessHistory,
+    updateProcessHistory,
     getAllProcessHistory
 };

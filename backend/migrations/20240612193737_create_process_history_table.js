@@ -5,8 +5,8 @@ exports.up = function(knex) {
     table.integer('User_id').unsigned().references('Id').inTable('User').onDelete('CASCADE');
     table.integer('OriginalImage_id').unsigned().references('Id').inTable('OriginalImage').onDelete('CASCADE');
     table.integer('ModifiedImage_id').unsigned().references('Id').inTable('ModifiedImage').onDelete('CASCADE');
-    table.date('CreationDate').notNullable();
-    table.date('UpdateDate').notNullable();
+    table.timestamp('CreationDate').defaultTo(knex.fn.now()).notNullable();
+    table.timestamp('UpdateDate').defaultTo(knex.fn.now()).notNullable();
   });
 };
 
