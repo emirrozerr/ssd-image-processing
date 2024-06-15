@@ -3,6 +3,8 @@ package com.example.ssdproject.network.api;
 import com.example.ssdproject.model.Image;
 import com.example.ssdproject.model.ProcessHistory;
 import com.example.ssdproject.model.User;
+import com.example.ssdproject.network.dto.LogHistoryRequestDTO;
+import com.example.ssdproject.network.dto.LogHistoryResponseDTO;
 import com.example.ssdproject.network.dto.LoginResponseDTO;
 import com.example.ssdproject.network.dto.ModifyResponseDTO;
 import com.example.ssdproject.network.dto.RegisterRequestDTO;
@@ -25,7 +27,8 @@ public interface ApiService {
 
     interface RequestUser {
         @GET("/api/users/{uid}")
-        Call<User> getUser(@Path("uid") String uid);
+        Call<User> getUser(@Header("Authorization") String token,
+                           @Path("uid") String uid);
 
         @POST("/api/users/register")
         Call<User> registerUser(@Body RegisterRequestDTO registerRequestDTO);
@@ -51,6 +54,11 @@ public interface ApiService {
 
     interface RequestProcessHistory {
         @GET("/api/processHistory/{hid}")
-        Call<ProcessHistory> getProcessHistory(@Path("hid") String hid);
+        Call<ProcessHistory> getProcessHistory(@Header("Authorization") String token,
+                                               @Path("hid") String hid);
+
+        @POST("/api/processHistory/logProcessHistory")
+        Call<LogHistoryResponseDTO> logProcessHistory(@Header("Authorization") String token,
+                                                      @Body LogHistoryRequestDTO logHistoryRequestDTO);
     }
 }
