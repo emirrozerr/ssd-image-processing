@@ -32,6 +32,20 @@ async function getOriginalImageById(imageId) {
     }
 }
 
+async function getModifiedImageById(imageId) {
+    const query = `SELECT * FROM "ModifiedImage" WHERE "Id" = $1`;
+    const params = [imageId];
+    console.log('Executing query:', query, 'with params:', params);
+
+    try {
+        const result = await pool.query(query, params);
+        return result.rows[0];
+    } catch (error) {
+        console.error('Error executing query:', query, 'with params:', params, error);
+        throw error;
+    }
+}
+
 async function saveModifiedImage(name, path, originalImageID) {
     const query = `INSERT INTO "ModifiedImage" ("Name", "Path", "OriginalImage_id") VALUES ($1, $2, $3) RETURNING *`;
     const params = [name, path, originalImageID];
@@ -48,5 +62,6 @@ async function saveModifiedImage(name, path, originalImageID) {
 module.exports = {
     loadImage,
     saveModifiedImage,
-    getOriginalImageById
+    getOriginalImageById,
+    getModifiedImageById
 };

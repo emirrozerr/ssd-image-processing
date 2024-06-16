@@ -10,19 +10,27 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.ssdproject.R;
 import com.example.ssdproject.ui.fragments.HistoryItems;
+import com.squareup.picasso.OkHttp3Downloader;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
 import java.util.List;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Protocol;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.SliderViewHolder> {
 
     private List<HistoryItems> historyItems;
-    private ViewPager2 viewPager2;
 
-    public HistoryAdapter(List<HistoryItems> historyItems, ViewPager2 viewPager2) {
+    public HistoryAdapter(List<HistoryItems> historyItems) {
         this.historyItems = historyItems;
-        this.viewPager2 = viewPager2;
+    }
+
+    public void setHistoryItems(List<HistoryItems> historyItems) {
+        this.historyItems = historyItems;
     }
 
     @NotNull
@@ -56,7 +64,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.SliderVi
         }
 
         public void setImage(HistoryItems historyItem) {
-            imageView.setImageResource(historyItem.getImage());
+            Picasso.get().load(historyItem.getUrl()).into(imageView);
         }
     }
 

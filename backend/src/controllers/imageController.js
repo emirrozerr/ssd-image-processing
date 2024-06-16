@@ -61,6 +61,24 @@ async function getOriginalImageById(req, res){
     }
 }
 
+async function getModifiedImageById(req, res){
+    try {
+        const imageId = req.params.id;
+
+        const image = await imageModel.getModifiedImageById(imageId);
+
+        if (!image) {
+            return res.status(404).json({ message: 'Image not found' });
+        }
+
+        //image is an URL to the modified image
+        res.json({ message: 'Image found', image });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error retrieving image' });
+    }
+}
+
 async function modifyImage(req, res){
     try {
         const imageId = req.params.id;
@@ -152,5 +170,6 @@ module.exports = {
     loadImage,
     saveModifiedImage,
     getOriginalImageById,
+    getModifiedImageById,
     modifyImage
 };

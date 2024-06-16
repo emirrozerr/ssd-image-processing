@@ -1,8 +1,10 @@
 package com.example.ssdproject.network.api;
 
 import com.example.ssdproject.model.Image;
-import com.example.ssdproject.model.ProcessHistory;
+import com.example.ssdproject.model.ModifiedImage;
 import com.example.ssdproject.model.User;
+import com.example.ssdproject.network.dto.GetModifiedImageResponseDTO;
+import com.example.ssdproject.network.dto.GetUserHistoryResponseDTO;
 import com.example.ssdproject.network.dto.LogHistoryRequestDTO;
 import com.example.ssdproject.network.dto.LogHistoryResponseDTO;
 import com.example.ssdproject.network.dto.LoginResponseDTO;
@@ -42,6 +44,10 @@ public interface ApiService {
         @GET("/api/images/{iid}")
         Call<Image> getOriginalImageById(@Path("iid") String iid);
 
+        @GET("/api/images/modified/{iid}")
+        Call<GetModifiedImageResponseDTO> getModifiedImageById(@Header("Authorization") String token,
+                                                               @Path("iid") String iid);
+
         @Multipart
         @POST("/api/images/upload")
         Call<UploadResponseDTO> loadImage(@Header("Authorization") String token,
@@ -54,8 +60,8 @@ public interface ApiService {
 
     interface RequestProcessHistory {
         @GET("/api/processHistory/{hid}")
-        Call<ProcessHistory> getProcessHistory(@Header("Authorization") String token,
-                                               @Path("hid") String hid);
+        Call<GetUserHistoryResponseDTO> getAllProcessHistory(@Header("Authorization") String token,
+                                                          @Path("hid") String hid);
 
         @POST("/api/processHistory/logProcessHistory")
         Call<LogHistoryResponseDTO> logProcessHistory(@Header("Authorization") String token,

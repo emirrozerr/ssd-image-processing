@@ -23,6 +23,7 @@ const upload = multer({
 });
 
 router.get('/:id', authenticateToken, imageController.getOriginalImageById);
+router.get('/modified/:id', authenticateToken, imageController.getModifiedImageById);
 router.post('/upload', upload.single('image'),authenticateToken, imageController.loadImage);
 router.post('/modify-image/:id',imageController.modifyImage);
 

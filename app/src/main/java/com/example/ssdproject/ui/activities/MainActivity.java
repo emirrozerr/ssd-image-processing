@@ -16,7 +16,13 @@ import com.example.ssdproject.network.api.ApiService;
 import com.example.ssdproject.network.api.SessionManager;
 import com.example.ssdproject.network.dto.LoginResponseDTO;
 import com.example.ssdproject.network.dto.RegisterRequestDTO;
+import com.squareup.picasso.OkHttp3Downloader;
+import com.squareup.picasso.Picasso;
 
+import java.util.Collections;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Protocol;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,6 +39,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final OkHttpClient client = new OkHttpClient().newBuilder()
+                .protocols(Collections.singletonList(Protocol.HTTP_1_1))
+                .build();
+        final Picasso myPicasso = new Picasso.Builder(this)
+                .downloader(new OkHttp3Downloader(client))
+                .build();
+        Picasso.setSingletonInstance(myPicasso);
 
         apiClient = ApiClient.getApiClient();
         sessionManager = new SessionManager(this);

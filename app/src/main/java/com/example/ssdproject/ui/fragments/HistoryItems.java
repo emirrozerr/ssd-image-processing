@@ -4,13 +4,13 @@ public class HistoryItems {
 
     //This variable stores the image displayed on the infinite scroll
     //Change to URI later on
-    private int image;
+    private String url;
 
-    public HistoryItems(int image) {
-        this.image = image;
+    public HistoryItems(String url) {
+        this.url = url;
     }
 
-    public int getImage() {
-        return image;
+    public String getUrl() {
+        return url;
     }
 }

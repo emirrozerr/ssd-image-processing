@@ -21,16 +21,14 @@ async function logProcessHistory(userID, originalImageID, modifiedImageID) {
     }
 }
 
-async function getAllProcessHistory(req, res) {
-    try {
-        const userID = parseInt(req.params.id, 10);
+async function getAllProcessHistory(userID) {
+    const query = `SELECT * FROM "ProcessHistory" WHERE "User_id" = $1`;
+        const params = [userID];
+        console.log('Executing query:', query, 'with params:', params);
 
-        if (isNaN(userID)) {
-            return res.status(400).json({ error: 'Invalid user ID' });
-        }
-
-        const history = await processHistoryModel.getAllProcessHistory(userID);
-        res.status(200).json({ message: 'Process history retrieved successfully', history });
+        try {
+            const result = await pool.query(query, params);
+            return result.rows;
     } catch (error) {
         console.error('Error retrieving process history:', error.message);
         res.status(500).json({ error: 'An error occurred while retrieving process history', details: error.message });

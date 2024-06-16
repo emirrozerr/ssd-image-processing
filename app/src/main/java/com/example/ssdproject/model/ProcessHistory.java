@@ -1,60 +1,69 @@
 package com.example.ssdproject.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 public class ProcessHistory {
-    private String id;
-    private Date creationDate;
-    private Date updateDate;
-    private String user_id;
-    private String original_image_id;
-    private String modified_image_id;
+    @SerializedName("Id")
+    private String Id;
+    @SerializedName("CreationDate")
+    private Date CreationDate;
+    @SerializedName("UpdateDate")
+    private Date UpdateDate;
+    @SerializedName("User_id")
+    private String User_id;
+    @SerializedName("OriginalImage_id")
+    private String OriginalImage_id;
+    @SerializedName("ModifiedImage_id")
+    private String ModifiedImage_id;
 
+    
     public String getId() {
-        return id;
+        return Id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.Id = id;
     }
 
     public Date getCreationDate() {
-        return creationDate;
+        return CreationDate;
     }
 
     public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
+        this.CreationDate = creationDate;
     }
 
     public Date getUpdateDate() {
-        return updateDate;
+        return UpdateDate;
     }
 
     public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
+        this.UpdateDate = updateDate;
     }
 
     public String getUser_id() {
-        return user_id;
+        return User_id;
     }
 
     public void setUser_id(String user_id) {
-        this.user_id = user_id;
+        this.User_id = user_id;
     }
 
-    public String getOriginal_image_id() {
-        return original_image_id;
+    public String getOriginalImage_id() {
+        return OriginalImage_id;
     }
 
-    public void setOriginal_image_id(String original_image_id) {
-        this.original_image_id = original_image_id;
+    public void setOriginalImage_id(String originalImage_id) {
+        this.OriginalImage_id = originalImage_id;
     }
 
-    public String getModified_image_id() {
-        return modified_image_id;
+    public String getModifiedImage_id() {
+        return ModifiedImage_id;
     }
 
-    public void setModified_image_id(String modified_image_id) {
-        this.modified_image_id = modified_image_id;
+    public void setModifiedImage_id(String modifiedImage_id) {
+        this.ModifiedImage_id = modifiedImage_id;
     }
 }

@@ -3,10 +3,6 @@ const processHistoryModel = require('../models/processHistoryModel');
 
 async function logProcessHistory(req, res) {
     try {
-        // Parse the request body values as integers
-        //const originalImageID = parseInt(req.body.OriginalImage_id, 10);
-        //const modifiedImageID = parseInt(req.body.ModifiedImage_id, 10);
-        //const userID = parseInt(req.body.User_id, 10);
         const userID = req.body.User_id;
         const originalImageID = req.body.OriginalImage_id;
         const modifiedImageID = req.body.ModifiedImage_id;
@@ -24,9 +20,9 @@ async function logProcessHistory(req, res) {
 
 async function getAllProcessHistory(req, res) {
     try {
-        const userID = parseInt(req.params.id, 10);
+        const userID = req.params.id;
 
-        if (isNaN(userID)) {
+        if (!userID) {
             return res.status(400).json({ error: 'Invalid user ID' });
         }
 

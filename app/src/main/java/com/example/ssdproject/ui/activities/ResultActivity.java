@@ -75,13 +75,13 @@ public class ResultActivity extends AppCompatActivity {
         String originalImageDbId = extras.getString("imagedbId");
 
         //Make the Picasso intance process HTTPS URLS
-        final OkHttpClient client = new OkHttpClient().newBuilder()
-                .protocols(Collections.singletonList(Protocol.HTTP_1_1))
-                .build();
-        final Picasso myPicasso = new Picasso.Builder(this)
-                .downloader(new OkHttp3Downloader(client))
-                .build();
-        Picasso.setSingletonInstance(myPicasso);
+        //final OkHttpClient client = new OkHttpClient().newBuilder()
+        //        .protocols(Collections.singletonList(Protocol.HTTP_1_1))
+        //        .build();
+        //final Picasso myPicasso = new Picasso.Builder(this)
+        //        .downloader(new OkHttp3Downloader(client))
+        //        .build();
+        //Picasso.setSingletonInstance(myPicasso);
         //-------------------------------------------
 
         //Call the AI engine here
