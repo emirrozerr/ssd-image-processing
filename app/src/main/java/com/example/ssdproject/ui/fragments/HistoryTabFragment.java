@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.ssdproject.R;
@@ -46,6 +47,7 @@ public class HistoryTabFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_history_tab, container, false);
+        Button refreshButton = view.findViewById(R.id.refresh_button);
         viewPager = view.findViewById(R.id.view_pager_history);
         viewPager.setOffscreenPageLimit(3);
         viewPager.setPageTransformer(new VerticalTransformer(3));
@@ -94,8 +96,14 @@ public class HistoryTabFragment extends Fragment {
             public void onFailure(Call<GetUserHistoryResponseDTO> call, Throwable throwable) {
                 Toast.makeText(getActivity().getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
             }
+        });
 
-
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                historyAdapter.setHistoryItems(historyItems);
+                historyAdapter.notifyDataSetChanged();
+            }
         });
 
         return view;
